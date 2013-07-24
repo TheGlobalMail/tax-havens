@@ -69,10 +69,14 @@
   overflow: hidden;
   &:after {
     // shadow / fade goes here
+    content: " ";
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 40px;
+    height: 80px;
+    #gradient > .vertical(rgba(255,255,255,0), @white);
+    //border: 1px solid red;
+    z-index: 4
   };
 }
 
@@ -82,7 +86,7 @@
   font-size: 1em;
   cursor: pointer;
   padding: 0.25em;
-  .border-radius(6px);
+  .border-radius(4px);
   &.selected, &:hover {
     color: @white;
     background: @orange;
@@ -94,21 +98,25 @@
 .country-container {
   position: relative;
   margin-bottom: 0.4em;
+  background: @grayLighter;
+  .border-radius(2px);
+  padding: .25em 0;
 }
 
 .country {
-  margin-left: 0.2em;
+  margin-left: 0.5em;
   position: relative;
   z-index: 2;
 }
 
 .country-bar {
-  background: @grayLighter;
+  background: @orange;
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   z-index: 1;
+  .border-radius(2px);
   .transition(width 1.5s);
 }
 
