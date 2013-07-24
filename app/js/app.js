@@ -7,6 +7,8 @@
   var container;
   var companyList;
   var countryList;
+  var companyName;
+  var defaultCompanyName;
 
   var processData = function() {
     var countryTotals = {};
@@ -29,8 +31,11 @@
       return {
         name: country,
         total: total,
+        // Element bindings which are added in `insertCountries`
         container: null,
-        bar: null
+        text: null,
+        bar: null,
+        number: null
       };
     });
   };
@@ -59,10 +64,9 @@
       obj.container = $('<li class="country-container" data-country-name="' + country +  '">');
       obj.text = $('<span class="country">').text(country);
       obj.bar = $('<div class="country-bar" style="width: 0;">');
+      obj.number = $('<span class="country-number">').text(obj.total);
 
-      obj.container
-        .append(obj.text)
-        .append(obj.bar);
+      obj.container.append(obj.text, obj.bar, obj.number);
 
       countryList.append(obj.container);
     });
@@ -88,19 +92,23 @@
   };
 
   var filterCountriesByCompanyData = function(data) {
+    var totalNumber = _.reduce(data, function(sum, num) { return sum + num; });
     var countryNames = _.keys(data);
     var countryElements = countryList.children('.country-container');
     countryElements.each(function() {
       var element = $(this);
       var countryName = element.attr('data-country-name');
       var countryBar = element.find('.country-bar');
+      var countryNumber = element.find('.country-number');
       if (data[countryName] !== undefined) {
         var total = data[countryName];
         element.attr('data-total', total);
-        countryBar.css('width', ((total / highestCountryCount) * 100) + '%');
+        countryBar.css('width', ((total / totalNumber) * 100) + '%');
+        countryNumber.text(total);
       } else if (!_.contains(countryNames, countryName)) {
         element.attr('data-total', 0);
         countryBar.css('width', '0');
+        countryNumber.text('');
       }
     });
     requestAnimationFrame(sortCountries);
@@ -112,6 +120,7 @@
       var barWidth = (obj.total / highestCountryCount) * 100;
       requestAnimationFrame(function() {
         obj.bar.css('width', barWidth + '%');
+        obj.number.text(obj.total);
       });
     });
     _.defer(sortCountries);
@@ -121,12 +130,14 @@
     var element = $(this);
     companyList.find('.selected').removeClass('selected');
     element.addClass('selected');
-    var companyName = element.attr('data-company');
-    if (companyName) {
+    var company = element.attr('data-company');
+    if (company) {
+      companyName.text(company);
       filterCountriesByCompanyData(
-        data[companyName]
+        data[company]
       );
     } else {
+      companyName.text(defaultCompanyName);
       showAllCountries();
     }
   };
@@ -139,6 +150,8 @@
     container = $('.tax-haven-visualisation');
     companyList = $('.company-list');
     countryList = $('.country-list');
+    companyName = $('.company-name');
+    defaultCompanyName = companyName.text();
 
     processData();
     insertCompanies();
