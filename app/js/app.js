@@ -2,7 +2,7 @@
   'use strict';
 
   var companyNames = [];
-  var allCountries;
+  var countries;
   var highestCountryCount = 0;
   var container;
   var companyList;
@@ -22,7 +22,7 @@
     });
     companyNames = companyNames.sort();
 
-    allCountries = _(countryTotals).map(function(total, country) {
+    countries = _.map(countryTotals, function(total, country) {
       if (highestCountryCount < total) {
         highestCountryCount = total;
       }
@@ -32,9 +32,7 @@
         container: null,
         bar: null
       };
-    }).sortBy(function(obj) {
-      return obj.total;
-    }).reverse().value();
+    });
   };
 
   var insertCompanies = function() {
@@ -54,48 +52,76 @@
   };
 
   var insertCountries = function() {
-    _.each(allCountries, function(obj) {
+    _.each(countries, function(obj) {
       var country = obj.name;
       var total = obj.total;
-      var container = $('<li class="country-container">');
+
+      var container = $('<li class="country-container" data-total="' + total +  '" data-country-name="' + country +  '">');
       obj.container = container;
+
       var text = $('<span class="country">').text(country);
-      var bar = $('<div class="country-bar">');
+
+      var bar = $('<div class="country-bar" style="width: 0;">');
       obj.bar = bar;
-      bar.css('width', 0);
 
       container
         .append(text)
         .append(bar);
 
       countryList.append(container);
-      var barWidth = total * (container.width() / highestCountryCount);
+
+      var barWidth = (total / highestCountryCount) * 100;
       requestAnimationFrame(function() {
-        bar.css('width', barWidth);
+        bar.css('width', barWidth + '%');
       });
+    });
+    requestAnimationFrame(initIsotype);
+  };
+
+  var initIsotype = function() {
+    countryList.isotope({
+      layoutMode: 'straightDown',
+      itemSelector: '.country-container',
+      getSortData: {
+        total: function(element) {
+          return parseInt(element.attr('data-total'));
+        }
+      },
+      sortBy: 'total',
+      sortAscending: false
+    });
+  };
+
+  var sortCountries = function() {
+    countryList.isotope('updateSortData', countryList.find('.country-container'));
+    countryList.isotope({
+      sortBy: 'total'
     });
   };
 
   var filterCountriesByCompanyData = function(data) {
-    // change width of each country to either it's fractional width or 0
-    // reposition each country in order,
-    //   where order is a descending arrangement reflecting the country's total or
-    //   alphabetic arrangement if the total is 0
-    var countries = _.keys(data);
-    _.each(allCountries, function(obj) {
-      if (_.contains(countries, obj.text)) {
-        // update with new val
-        // reposition
-        obj.bar.css('width', barWidth);
-      } else {
-        // set width to 0
-        // reposition
+    var countryNames = _.keys(data);
+    var countryElements = countryList.children('.country-container');
+    countryElements.each(function() {
+      var element = $(this);
+      var countryName = element.attr('data-country-name');
+      var countryBar = element.find('.country-bar');
+      if (data[countryName] !== undefined) {
+        var total = data[countryName];
+        element.attr('data-total', total);
+        countryBar.css('width', ((total / highestCountryCount) * 100) + '%');
+      } else if (!_.contains(countryNames, countryName)) {
+        element.attr('data-total', 0);
+        countryBar.css('width', '0');
       }
-    })
+    });
+    requestAnimationFrame(sortCountries);
   };
 
   var companyOnClick = function() {
     var element = $(this);
+    companyList.find('.selected').removeClass('selected');
+    element.addClass('selected');
     filterCountriesByCompanyData(
       data[element.text()]
     )
