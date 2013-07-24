@@ -99,14 +99,6 @@
     });
   };
 
-  var resetCountryBar = function(element) {
-    var barWidth = (total / highestCountryCount) * 100;
-    requestAnimationFrame(function() {
-      bar.css('width', barWidth + '%');
-      requestAnimationFrame(initIsotype)
-    });
-  };
-
   var filterCountriesByCompanyData = function(data) {
     var countryNames = _.keys(data);
     var countryElements = countryList.children('.country-container');
@@ -128,6 +120,8 @@
 
   var companyOnClick = function() {
     var element = $(this);
+    companyList.find('.selected').removeClass('selected');
+    element.addClass('selected');
     filterCountriesByCompanyData(
       data[element.text()]
     )
