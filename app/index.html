@@ -37,9 +37,34 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
   <div id="main" role="main">
+    <header class="viz-overview">
+      <h1 class="viz-title">Tax Haven Tour</h1>
+      <p class="viz-intro-text">
+        Intro text suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et.
+      </p>
+    </header>
+    
     <div class="tax-haven-visualisation">
-      <ul class="company-list"></ul>
-      <ul class="country-list"></ul>
+      <h2 class="selected-info">
+        <span class="lead-in">Subsidiaries For:</span>
+        <span class="company-name">Company Name</span>
+        <a class="company-info-link" href="http://www.asx.com.au/asx/research/companyInfo.do?by=asxCode&asxCode=CBA" target="_blank" title="Company information for [3-letter-code] on ASX.com.au">
+          <i class="icon-info-sign"></i>
+        </a>
+      </h2>
+
+      <div class="company-list-column list-column">
+        <h3 class="column-title">ASX 100 Company</h3>
+        <div class="list-wrapper">
+          <ul class="company-list"></ul>
+        </div>
+      </div>
+
+      <div class="country-list-column list-column">
+        <h3 class="column-title">Number of Subsidiaries</h3>
+        <ul class="country-list"></ul>
+      </div>
+
       <div class="clear"></div>
     </div>
   </div>
