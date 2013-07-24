@@ -46,6 +46,7 @@
 
     _.each(companyNames, function(company) {
       var element = template.clone()
+        .attr('data-company', company)
         .text(company);
       companyList.append(element);
     });
@@ -118,13 +119,22 @@
     requestAnimationFrame(sortCountries);
   };
 
+  var showAllCountries = function() {
+
+  };
+
   var companyOnClick = function() {
     var element = $(this);
     companyList.find('.selected').removeClass('selected');
     element.addClass('selected');
-    filterCountriesByCompanyData(
-      data[element.text()]
-    )
+    var companyName = element.attr('data-company');
+    if (companyName) {
+      filterCountriesByCompanyData(
+        data[companyName]
+      );
+    } else {
+      showAllCountries();
+    }
   };
 
   var setBindings = function() {
