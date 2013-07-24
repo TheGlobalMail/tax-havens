@@ -55,34 +55,28 @@
   var insertCountries = function() {
     _.each(countries, function(obj) {
       var country = obj.name;
-      var total = obj.total;
 
-      var container = $('<li class="country-container" data-total="' + total +  '" data-country-name="' + country +  '">');
-      obj.container = container;
+      obj.container = $('<li class="country-container" data-country-name="' + country +  '">');
+      obj.text = $('<span class="country">').text(country);
+      obj.bar = $('<div class="country-bar" style="width: 0;">');
 
-      var text = $('<span class="country">').text(country);
+      obj.container
+        .append(obj.text)
+        .append(obj.bar);
 
-      var bar = $('<div class="country-bar" style="width: 0;">');
-      obj.bar = bar;
-
-      container
-        .append(text)
-        .append(bar);
-
-      countryList.append(container);
-
-      var barWidth = (total / highestCountryCount) * 100;
-      requestAnimationFrame(function() {
-        bar.css('width', barWidth + '%');
-      });
+      countryList.append(obj.container);
     });
-    requestAnimationFrame(initIsotype);
-  };
-
-  var initIsotype = function() {
     countryList.isotope({
       layoutMode: 'straightDown',
-      itemSelector: '.country-container',
+      itemSelector: '.country-container'
+    });
+    showAllCountries();
+    sortCountries();
+  };
+
+  var sortCountries = function() {
+    countryList.isotope('updateSortData', countryList.find('.country-container'));
+    countryList.isotope({
       getSortData: {
         total: function(element) {
           return parseInt(element.attr('data-total'));
@@ -90,13 +84,6 @@
       },
       sortBy: 'total',
       sortAscending: false
-    });
-  };
-
-  var sortCountries = function() {
-    countryList.isotope('updateSortData', countryList.find('.country-container'));
-    countryList.isotope({
-      sortBy: 'total'
     });
   };
 
@@ -120,7 +107,14 @@
   };
 
   var showAllCountries = function() {
-
+    _.each(countries, function(obj) {
+      obj.container.attr('data-total', obj.total);
+      var barWidth = (obj.total / highestCountryCount) * 100;
+      requestAnimationFrame(function() {
+        obj.bar.css('width', barWidth + '%');
+      });
+    });
+    _.defer(sortCountries);
   };
 
   var companyOnClick = function() {
