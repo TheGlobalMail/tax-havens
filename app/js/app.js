@@ -92,7 +92,7 @@
   };
 
   var filterCountriesByCompanyData = function(data) {
-    var totalNumber = _.reduce(data, function(sum, num) { return sum + num; });
+    var totalNumber = _.max(_.values(data));
     var countryNames = _.keys(data);
     var countryElements = countryList.children('.country-container');
     countryElements.each(function() {
