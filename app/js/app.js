@@ -167,6 +167,7 @@
   var showAllCountries = function() {
     companyName.text(defaultCompanyName);
     animateCountTo(subsidiariesCount, highestCountryCount);
+    companyInfoLink.hide();
     _.each(countries, function(obj) {
       obj.container.attr('data-total', obj.total);
       var barWidth = (obj.total / highestCountryCount) * 100;
@@ -189,6 +190,8 @@
     companies.filter('.selected').removeClass('selected');
     element.addClass('selected');
     var company = element.attr('data-company');
+    console.error('company:')
+    console.error(company)
     if (company) {
       filterCountriesByCompanyData(company, data[company]);
     } else {
