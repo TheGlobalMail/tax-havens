@@ -15,7 +15,7 @@
     var countryTotals = {};
     _.each(data, function(obj, companyName) {
       companyNames.push(companyName);
-      _.each(obj, function(number, country) {
+      _.each(obj.countries, function(number, country) {
         if (countryTotals[country] === undefined) {
           countryTotals[country] = number;
         } else {
@@ -26,7 +26,7 @@
 
     companyNames = _(companyNames).sortBy(function(company) {
         return _.reduce(
-          _.values(data[company]),
+          _.values(data[company].countries),
           function(sum, num) {
             return sum + num;
           }
@@ -104,17 +104,17 @@
   };
 
   var filterCountriesByCompanyData = function(data) {
-    var totalNumber = _.max(_.values(data));
+    var totalNumber = _.max(_.values(data.countries));
     animateScaleMarkerHighTo(totalNumber);
-    var countryNames = _.keys(data);
+    var countryNames = _.keys(data.countries);
     var countryElements = countryList.children('.country-container');
     countryElements.each(function() {
       var element = $(this);
       var countryName = element.attr('data-country-name');
       var countryBar = element.find('.country-bar');
       var countryNumber = element.find('.country-number');
-      if (data[countryName] !== undefined) {
-        var total = data[countryName];
+      if (data.countries[countryName] !== undefined) {
+        var total = data.countries[countryName];
         element.attr('data-total', total);
         countryBar.css('width', ((total / totalNumber) * 100) + '%');
         countryNumber.text(total);
