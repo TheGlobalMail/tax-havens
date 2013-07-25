@@ -44,12 +44,6 @@
   var insertCompanies = function() {
     var template = $('<li class="company">');
 
-    companyList.append(
-      template.clone()
-        .addClass('all selected')
-        .text('Total offshore subsidaries')
-    );
-
     _.each(companyNames, function(company) {
       var element = template.clone()
         .attr('data-company', company)
@@ -140,7 +134,8 @@
 
   var companyOnClick = function() {
     var element = $(this);
-    companyList.find('.selected').removeClass('selected');
+    var companies = $('.company');
+    companies.filter('.selected').removeClass('selected');
     element.addClass('selected');
     var company = element.attr('data-company');
     if (company) {
@@ -155,7 +150,7 @@
   };
 
   var setBindings = function() {
-    companyList.on('click', '.company', companyOnClick);
+    $('.company').on('click', companyOnClick);
   };
 
   var init = function() {
