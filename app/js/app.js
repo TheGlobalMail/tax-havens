@@ -23,7 +23,15 @@
         }
       });
     });
-    companyNames = companyNames.sort();
+
+    companyNames = _(companyNames).sortBy(function(company) {
+        return _.reduce(
+          _.values(data[company]),
+          function(sum, num) {
+            return sum + num;
+          }
+        );
+      }).reverse().value();
 
     countries = _.map(countryTotals, function(total, country) {
       if (highestCountryCount < total) {
