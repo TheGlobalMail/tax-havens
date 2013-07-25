@@ -10,6 +10,9 @@
   var companyName;
   var defaultCompanyName;
   var scaleMarkerHigh;
+  var subsidiariesCount;
+  var companyInfoLink;
+  var companyCount;
 
   var processData = function() {
     var countryTotals = {};
@@ -77,7 +80,8 @@
       layoutMode: 'straightDown',
       itemSelector: '.country-container'
     });
-    showAllCountries();
+//    showAllCountries();
+    filterCountriesByCompanyData(data[companyNames[0]]);
     sortCountries();
   };
 
@@ -94,9 +98,9 @@
     });
   };
 
-  var animateScaleMarkerHighTo = function(number) {
-    scaleMarkerHigh.countTo({
-      from: parseInt(scaleMarkerHigh.text()),
+  var animateCountTo = function(element, number) {
+    element.countTo({
+      from: parseInt(element.text()),
       to: number,
       speed: 750,
       refreshInterval: 50
@@ -104,8 +108,22 @@
   };
 
   var filterCountriesByCompanyData = function(data) {
-    var totalNumber = _.max(_.values(data.countries));
-    animateScaleMarkerHighTo(totalNumber);
+
+    var sumOfCounts = _(data.countries).values().reduce(function(s,n) { console.log(s,n);return s + n; });
+    animateCountTo(subsidiariesCount, sumOfCounts);
+
+    if (data.asx) {
+      companyInfoLink
+        .show()
+        .attr(
+          'href',
+          'http://www.asx.com.au/asx/research/companyInfo.do?by=asxCode&asxCode=' + data.asx
+        );
+    } else {
+      companyInfoLink.hide();
+    }
+
+    var highestNumber = _.max(_.values(data.countries));
     var countryNames = _.keys(data.countries);
     var countryElements = countryList.children('.country-container');
     countryElements.each(function() {
@@ -116,7 +134,7 @@
       if (data.countries[countryName] !== undefined) {
         var total = data.countries[countryName];
         element.attr('data-total', total);
-        countryBar.css('width', ((total / totalNumber) * 100) + '%');
+        countryBar.css('width', ((total / highestNumber) * 100) + '%');
         countryNumber.text(total);
       } else if (!_.contains(countryNames, countryName)) {
         element.attr('data-total', 0);
@@ -128,7 +146,7 @@
   };
 
   var showAllCountries = function() {
-    animateScaleMarkerHighTo(highestCountryCount);
+    animateCountTo(subsidiariesCount, highestCountryCount);
     _.each(countries, function(obj) {
       obj.container.attr('data-total', obj.total);
       var barWidth = (obj.total / highestCountryCount) * 100;
@@ -210,6 +228,10 @@
     $('.list-control-up, .list-control-down').on('click', listControlOnClick);
   };
 
+  var populateCompanyCount = function() {
+    companyCount.text(companyNames.length);
+  };
+
   var init = function() {
     container = $('.tax-haven-visualisation');
     companyList = $('.company-list');
@@ -217,7 +239,9 @@
     companyName = $('.company-name');
     defaultCompanyName = companyName.text();
     scaleMarkerHigh = $('.scale-marker-high');
-
+    subsidiariesCount = $('.subsidiaries-count');
+    companyInfoLink = $('.company-info-link');
+    companyCount = $('.company-count');
 
     processData();
     insertCompanies();
