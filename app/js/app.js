@@ -44,12 +44,6 @@
   var insertCompanies = function() {
     var template = $('<li class="company">');
 
-    companyList.append(
-      template.clone()
-        .addClass('all selected')
-        .text('Total offshore subsidaries')
-    );
-
     _.each(companyNames, function(company) {
       var element = template.clone()
         .attr('data-company', company)
@@ -140,7 +134,13 @@
 
   var companyOnClick = function() {
     var element = $(this);
-    companyList.find('.selected').removeClass('selected');
+    if (countryList.scrollTop() > 0) {
+      countryList.animate({
+        'scrollTop': 0
+      }, 500);
+    }
+    var companies = $('.company');
+    companies.filter('.selected').removeClass('selected');
     element.addClass('selected');
     var company = element.attr('data-company');
     if (company) {
@@ -154,8 +154,52 @@
     }
   };
 
+  var getListOnScroll = function($element) {
+
+    var element = $element[0];
+    var elementHeight = $element.outerHeight();
+    var up = $element.parent().find('.list-control-up');
+    var down = $element.parent().find('.list-control-down');
+
+    return function() {
+      var elementScrollTop = $element.scrollTop();
+      if (elementScrollTop === 0) {
+        up.addClass('disabled');
+      } else if (element.scrollHeight == elementScrollTop + elementHeight) {
+        down.addClass('disabled');
+      } else {
+        up.removeClass('disabled');
+        down.removeClass('disabled');
+      }
+    };
+  };
+
+  var listControlOnClick = function() {
+    var element = $(this);
+    var list = element.parent().siblings('ul');
+    if (!element.hasClass('disabled')) {
+      if (element.hasClass('list-control-up')) {
+        list.animate({
+          'scrollTop': '-=' + (list.height() * 0.95)
+        }, 500);
+      } else {
+        list.animate({
+          'scrollTop': '+=' + (list.height() * 0.95)
+        }, 500);
+      }
+    }
+  };
+
   var setBindings = function() {
-    companyList.on('click', '.company', companyOnClick);
+    $('.company').on('click', companyOnClick);
+
+    _.each([companyList, countryList], function(element) {
+      var onScroll = getListOnScroll(element);
+      element.on('scroll', onScroll);
+      onScroll();
+    });
+
+    $('.list-control-up, .list-control-down').on('click', listControlOnClick);
   };
 
   var init = function() {
@@ -163,8 +207,9 @@
     companyList = $('.company-list');
     countryList = $('.country-list');
     companyName = $('.company-name');
-    scaleMarkerHigh = $('.scale-marker-high');
     defaultCompanyName = companyName.text();
+    scaleMarkerHigh = $('.scale-marker-high');
+
 
     processData();
     insertCompanies();
