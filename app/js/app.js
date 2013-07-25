@@ -4,6 +4,7 @@
   var companyNames = [];
   var countries;
   var highestCountryCount = 0;
+  var totalCountryCount = 0;
   var container;
   var companyList;
   var countryList;
@@ -13,6 +14,7 @@
   var subsidiariesCount;
   var companyInfoLink;
   var companyCount;
+  var subsidiaryCount;
 
   var processData = function() {
     var countryTotals = {};
@@ -24,17 +26,11 @@
         } else {
           countryTotals[country] += number;
         }
+        totalCountryCount += number;
       });
     });
 
-    companyNames = _(companyNames).sortBy(function(company) {
-        return _.reduce(
-          _.values(data[company].countries),
-          function(sum, num) {
-            return sum + num;
-          }
-        );
-      }).reverse().value();
+    companyNames = _(companyNames).sortBy(sumCompanySubsidiaries).reverse().value();
 
     countries = _.map(countryTotals, function(total, country) {
       if (highestCountryCount < total) {
@@ -52,14 +48,26 @@
     });
   };
 
-  var insertCompanies = function() {
-    var template = $('<li class="company">');
+  var sumCompanySubsidiaries = function(companyName) {
+    return _.reduce(
+      _.values(data[companyName].countries),
+      function(sum, num) {
+        return sum + num;
+      }
+    );
+  };
 
+  var insertCompanies = function() {
     _.each(companyNames, function(company) {
-      var element = template.clone()
-        .attr('data-company', company)
+      var container = $('<li class="company">')
+        .attr('data-company', company);
+      var text = $('<span class="company-text">')
         .text(company);
-      companyList.append(element);
+      var number = $('<span class="company-number">')
+        .text(sumCompanySubsidiaries(company));
+      var clear = $('<div class="clear">');
+      container.append(text, number, clear);
+      companyList.append(container);
     });
   };
 
@@ -81,7 +89,8 @@
       itemSelector: '.country-container'
     });
 //    showAllCountries();
-    filterCountriesByCompanyData(data[companyNames[0]]);
+    var company = companyNames[0];
+    filterCountriesByCompanyData(company, data[company]);
     sortCountries();
   };
 
@@ -107,10 +116,12 @@
     });
   };
 
-  var filterCountriesByCompanyData = function(data) {
+  var filterCountriesByCompanyData = function(company, data) {
 
-    var sumOfCounts = _(data.countries).values().reduce(function(s,n) { console.log(s,n);return s + n; });
+    var sumOfCounts = _(data.countries).values().reduce(function(s,n) { return s + n; });
     animateCountTo(subsidiariesCount, sumOfCounts);
+
+    companyName.text(company);
 
     if (data.asx) {
       companyInfoLink
@@ -146,6 +157,7 @@
   };
 
   var showAllCountries = function() {
+    companyName.text(defaultCompanyName);
     animateCountTo(subsidiariesCount, highestCountryCount);
     _.each(countries, function(obj) {
       obj.container.attr('data-total', obj.total);
@@ -170,12 +182,8 @@
     element.addClass('selected');
     var company = element.attr('data-company');
     if (company) {
-      companyName.text(company);
-      filterCountriesByCompanyData(
-        data[company]
-      );
+      filterCountriesByCompanyData(company, data[company]);
     } else {
-      companyName.text(defaultCompanyName);
       showAllCountries();
     }
   };
@@ -228,8 +236,9 @@
     $('.list-control-up, .list-control-down').on('click', listControlOnClick);
   };
 
-  var populateCompanyCount = function() {
+  var populateCountsFromData = function() {
     companyCount.text(companyNames.length);
+    subsidiaryCount.text(totalCountryCount)
   };
 
   var init = function() {
@@ -242,11 +251,13 @@
     subsidiariesCount = $('.subsidiaries-count');
     companyInfoLink = $('.company-info-link');
     companyCount = $('.company-count');
+    subsidiaryCount = $('.subsidiary-count');
 
     processData();
     insertCompanies();
     insertCountries();
     setBindings();
+    populateCountsFromData();
   };
 
   $(init);
