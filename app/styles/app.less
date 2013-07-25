@@ -1,11 +1,12 @@
 
-@tgmStoryWidth:   620px;
+@tgmStoryWidth:   600px;
 @orange:          #fd9c58;
 @white:           #fff;
 @black:           #111;
 @gray:            #666;
 @grayLight:       #999;
-@grayLighter:     #e3e3e3;
+@grayLighter:     #ddd;
+@grayLightest:    #f6f6f6;
 @sansFontFamily:  "open-sans", "Open Sans", Helvetica, Arial, sans-serif;
 @baseFontSize:    14px;
 @baseLineHeight:  20px;
@@ -24,7 +25,8 @@ body {
   font-size: @baseFontSize; 
   line-height: @baseLineHeight;
   margin: 0;
-  padding: 0;
+  padding: 10px;
+  background: @grayLightest;
 }
 
 
@@ -33,7 +35,7 @@ body {
 .viz-title {
   font-weight: 900;
   text-transform: uppercase;
-  font-size: @baseFontSize * 5;
+  font-size: @baseFontSize * 4.8;
   line-height: @baseLineHeight * 3;
   letter-spacing: -1px;
   text-align: center;
@@ -153,7 +155,7 @@ body {
 }
 
 .list-control {
-  background: @white;
+  background: @grayLightest;
   color: @gray;
   .border-radius(3px);
   text-align: center;
@@ -168,11 +170,11 @@ body {
   }
   &.list-control-up {
     top: 0;
-    .box-shadow(0 (@fadeHeight * -0.5) @fadeHeight @fadeHeight @white);
+    .box-shadow(0 (@fadeHeight * -0.5) @fadeHeight @fadeHeight @grayLightest);
   }
   &.list-control-down {
     bottom: 0;
-    .box-shadow(0 (@fadeHeight * 0.5) @fadeHeight @fadeHeight @white);
+    .box-shadow(0 (@fadeHeight * 0.5) @fadeHeight @fadeHeight @grayLightest);
   }
   &:hover {
     color: @black;
@@ -184,7 +186,7 @@ body {
     .box-shadow(0 0 0 0 transparent);
 
     &:hover {
-      background: @white;
+      background: @grayLightest;
     };
   }
 }
@@ -308,7 +310,7 @@ body {
 }
 
 .country-container[data-total="0"] {
-  background: @white;
+  background: @grayLightest;
   z-index: 2;
   .country-bar {
     background: transparent;
