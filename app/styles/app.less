@@ -2,7 +2,7 @@
 @tgmStoryWidth:   620px;
 @orange:          #fd9c58;
 @white:           #fff;
-@black:           #000;
+@black:           #111;
 @gray:            #666;
 @grayLight:       #999;
 @grayLighter:     #e3e3e3;
@@ -74,6 +74,9 @@ body {
   line-height: @baseLineHeight;
   font-size: @baseFontSize * .75;
   padding: 0 6px;
+  margin: 8px 0 0 4px;
+  vertical-align: top;
+
   .border-radius(3px);
   &:hover {
     color: @white;
@@ -122,8 +125,8 @@ body {
 }
 
 .country-list {
-  margin-bottom: 20px;
-  max-height: 500px - 20px;  
+  margin-bottom: 25px;
+  max-height: 500px - 25px;  
 }
 
 // UP / DOWN ARROWS
@@ -172,24 +175,10 @@ body {
 // RESET BUTTON
 
 .company.all {
-  // height: @baseFontSize * 1.75;
-  // padding: @baseFontSize * 0.75 0 0 0;
-  // margin: 0 0 @baseLineHeight 0;
-  // display: block;  
   font-weight: 900;
   font-size: @baseFontSize * 0.85;
   text-transform: uppercase;
   text-align: center;
-  // color: @black;
-  // background: @grayLighter;
-  // &:hover {
-  //   color: @black;
-  //   background: @grayLight;
-  // };
-  // &.selected {
-  //   color: @black;
-  //   background: @grayLighter;
-  // };
 }
 
 // SCALE 
@@ -291,7 +280,7 @@ body {
   top: 3px;
   right: 3%;
   z-index: 5;
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 .country-container[data-total="0"] {
