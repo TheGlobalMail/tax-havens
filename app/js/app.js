@@ -64,9 +64,12 @@
   };
 
   var insertCompanies = function() {
-    _.each(companyNames, function(company) {
+    _.each(companyNames, function(company, i) {
       var container = $('<li class="company">')
         .attr('data-company', company);
+      if (i === 0) {
+        container.addClass('selected');
+      }
       var text = $('<span class="company-text">')
         .text(company);
       var number = $('<span class="company-number">')
