@@ -174,16 +174,32 @@
     };
   };
 
+  var listControlOnClick = function() {
+    var element = $(this);
+    var list = element.parent().siblings('ul');
+    if (!element.hasClass('disabled')) {
+      if (element.hasClass('list-control-up')) {
+        list.animate({
+          'scrollTop': '-=' + (list.height() * 0.95)
+        }, 500);
+      } else {
+        list.animate({
+          'scrollTop': '+=' + (list.height() * 0.95)
+        }, 500);
+      }
+    }
+  };
+
   var setBindings = function() {
     $('.company').on('click', companyOnClick);
 
-    var companyListOnScroll = getListOnScroll(companyList);
-    companyListOnScroll();
-    companyList.on('scroll', companyListOnScroll);
+    _.each([companyList, countryList], function(element) {
+      var onScroll = getListOnScroll(element);
+      element.on('scroll', onScroll);
+      onScroll();
+    });
 
-    var countryListOnScroll = getListOnScroll(companyList);
-    countryListOnScroll();
-    countryList.on('scroll', countryListOnScroll);
+    $('.list-control-up, .list-control-down').on('click', listControlOnClick);
   };
 
   var init = function() {
@@ -191,8 +207,9 @@
     companyList = $('.company-list');
     countryList = $('.country-list');
     companyName = $('.company-name');
-    scaleMarkerHigh = $('.scale-marker-high');
     defaultCompanyName = companyName.text();
+    scaleMarkerHigh = $('.scale-marker-high');
+
 
     processData();
     insertCompanies();
