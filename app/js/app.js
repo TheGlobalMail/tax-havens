@@ -195,8 +195,6 @@
     companies.filter('.selected').removeClass('selected');
     element.addClass('selected');
     var company = element.attr('data-company');
-    console.error('company:')
-    console.error(company)
     if (company) {
       filterCountriesByCompanyData(company, data[company]);
     } else {
