@@ -23,6 +23,7 @@
 
 // TITLE & INTRO
 
+
 .viz-title {
   font-weight: 900;
   text-transform: uppercase;
@@ -34,34 +35,36 @@
   margin: 0;
 }
 
+.selected-info {
+  .clearfix();
+}
+
 .lead-in {
   display: block;
   color: @grayLight;
   text-transform: uppercase;
-  font-size: @baseFontSize;
+  font-size: @baseFontSize * 0.85;
 }
 
 .company-name {
-  font-size: 1.1em;
-  line-height: 1.2;
-  // display: block;
-  margin: 0 0 .2em 0;
+  font-size: @baseFontSize * 1.6;
+  line-height: @baseLineHeight;
+  display: block;
+  float: left;
+  margin: 0 6px .2em 0;
   color: @orange;
 }
 
 .company-info-link {
   color: @gray;
   background: @grayLighter;
-  display: inline-block;
+  display: block;
+  float: left;
   text-decoration: none;
-  line-height: @baseFontSize * .75;
+  line-height: @baseLineHeight;
   font-size: @baseFontSize * .75;
-  padding: 6px;
-  padding-bottom: 0;
+  padding: 0 6px;
   .border-radius(3px);
-  i {
-    // font-size: @baseFontSize * 1.5;
-  }
   &:hover {
     color: @white;
     background: @orange;
@@ -79,17 +82,17 @@
 .column-title {
   font-weight: 900;
   border-bottom: .4em solid @orange;
-  margin: 0;
+  margin: 0 0 .75em 0;
 }
 
 .company-list-column {
-  width: 25%;
+  width: 30%;
   margin-right: 5%;
   float: left;
 }
 
 .country-list-column {
-  width: 70%;
+  width: 65%;
   float: left;  
 }
 
@@ -131,6 +134,7 @@
   }
   &.list-control-up {
     top: 0;
+    margin-top: 1px;
     .box-shadow(0 (@fadeHeight * -0.5) @fadeHeight @fadeHeight @white);
   }
   &.list-control-down {
@@ -145,10 +149,31 @@
 
 // SCALE 
 
+span.company.all {
+  height: @baseFontSize * 2;
+  padding: @baseFontSize * 0.5 0 0 0;
+  margin: 0;
+  display: block;  
+  font-weight: 900;
+  font-size: @baseFontSize * 0.85;
+  text-transform: uppercase;
+  text-align: center;
+  color: @black;
+  background: @grayLighter;
+  &:hover {
+    color: @black;
+    background: @grayLight;
+  };
+  &.selected {
+    color: @black;
+    background: @grayLighter;
+  };
+}
+
 .scale-wrapper {
   position: relative;
-  height: 2em;
-  margin-top: 0.5em;
+  height: @baseFontSize * 2;
+  margin: @baseFontSize * 0.5 0;
 }
 
 .scale-marker {
@@ -205,13 +230,17 @@
 
 // COUNTRIES
 
+.country-list {
+  z-index: 1;
+}
+
 .country-container {
   margin-bottom: 0.4em;
   background: @grayLighter;
   .border-radius(2px);
   padding: .25em 0;
   width: 100%;
-  z-index: 4;
+  z-index: 3;
 }
 
 .country {
@@ -226,7 +255,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  z-index: 1;
+  z-index: 4;
   .border-radius(2px);
   .transition(width 1.5s);
 }
@@ -235,18 +264,31 @@
   position: absolute;
   top: 3px;
   right: 3%;
-  z-index: 2;
+  z-index: 5;
   opacity: 0.4;
 }
 
 .country-container[data-total="0"] {
   background: @white;
-  z-index: 3;
+  z-index: 2;
   .country-bar {
     background: transparent;
   }
   .country {
     color: @grayLight;
+  }
+}
+
+.credit {
+  color: @grayLight;
+  font-size: @baseFontSize * 0.75;
+  line-height: @baseLineHeight * .75;
+
+  a {
+    color: @gray;
+    &:hover {
+      color: @black;
+    };
   }
 }
 
