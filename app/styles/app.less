@@ -40,29 +40,36 @@ body {
 
 .selected-info {
   .clearfix();
+  padding-bottom: @baseLineHeight / 2;
+  border-bottom: @baseLineHeight / 4 solid @orange;
+  margin-bottom: @baseLineHeight / 2;
 }
 
-.lead-in {
+.subsidiaries-info {
   display: block;
   color: @grayLight;
   text-transform: uppercase;
-  font-size: @baseFontSize * 0.85;
+  font-size: @baseFontSize;
+  padding-top: @baseLineHeight * .25;
+  clear: both;
+}
+
+.subsidiaries-count {
+  color: @black;
 }
 
 .company-name {
-  font-size: @baseFontSize * 1.6;
-  line-height: @baseLineHeight;
-  display: block;
-  float: left;
-  margin: 0 6px .2em 0;
+  font-size: @baseFontSize * 2;
+  line-height: @baseLineHeight * 1.5;
+  display: inline;
+  margin: 0 0 .2em 0;
   color: @orange;
 }
 
 .company-info-link {
   color: @gray;
   background: @grayLighter;
-  display: block;
-  float: left;
+  display: inline-block;
   text-decoration: none;
   line-height: @baseLineHeight;
   font-size: @baseFontSize * .75;
@@ -165,24 +172,24 @@ body {
 // RESET BUTTON
 
 .company.all {
-  height: @baseFontSize * 1.75;
-  padding: @baseFontSize * 0.75 0 0 0;
-  margin: 0 0 @baseLineHeight 0;
-  display: block;  
+  // height: @baseFontSize * 1.75;
+  // padding: @baseFontSize * 0.75 0 0 0;
+  // margin: 0 0 @baseLineHeight 0;
+  // display: block;  
   font-weight: 900;
   font-size: @baseFontSize * 0.85;
   text-transform: uppercase;
   text-align: center;
-  color: @black;
-  background: @grayLighter;
-  &:hover {
-    color: @black;
-    background: @grayLight;
-  };
-  &.selected {
-    color: @black;
-    background: @grayLighter;
-  };
+  // color: @black;
+  // background: @grayLighter;
+  // &:hover {
+  //   color: @black;
+  //   background: @grayLight;
+  // };
+  // &.selected {
+  //   color: @black;
+  //   background: @grayLighter;
+  // };
 }
 
 // SCALE 
