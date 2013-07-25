@@ -27,7 +27,6 @@ body {
 
 // TITLE & INTRO
 
-
 .viz-title {
   font-weight: 900;
   text-transform: uppercase;
@@ -111,7 +110,13 @@ body {
   margin: 0;
   padding: (@fadeHeight * 3) 0;
   max-height: 500px;
-  overflow: scroll !important;
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
+}
+
+.country-list {
+  margin-bottom: 30px;
+  max-height: 500px - 30px;  
 }
 
 // UP / DOWN ARROWS
@@ -138,7 +143,6 @@ body {
   }
   &.list-control-up {
     top: 0;
-    margin-top: 1px;
     .box-shadow(0 (@fadeHeight * -0.5) @fadeHeight @fadeHeight @white);
   }
   &.list-control-down {
@@ -149,14 +153,21 @@ body {
     color: @black;
     background: @grayLighter;
   };
+  &.disabled {
+    color: @grayLighter;
+    cursor: default;
+    &:hover {
+      background: @white;
+    };
+  }
 }
 
-// SCALE 
+// RESET BUTTON
 
-span.company.all {
+.company.all {
   height: @baseFontSize * 2;
   padding: @baseFontSize * 0.5 0 0 0;
-  margin: 0;
+  margin: 0 0 @baseLineHeight 0;
   display: block;  
   font-weight: 900;
   font-size: @baseFontSize * 0.85;
@@ -174,10 +185,13 @@ span.company.all {
   };
 }
 
+// SCALE 
+
+
 .scale-wrapper {
   position: relative;
-  height: @baseFontSize * 2;
-  margin: @baseFontSize * 0.5 0;
+  height: @baseFontSize * 2.5;
+  margin: @baseFontSize * 0.5 0 @baseLineHeight 0;
 }
 
 .scale-marker {
@@ -222,8 +236,9 @@ span.company.all {
 
 .company {
   font-size: 1em;
+  line-height: 1.2;
   cursor: pointer;
-  padding: 0.25em;
+  padding: 0.4em;
   .border-radius(3px);
   margin-bottom: 1px;
   &.selected, &:hover {
@@ -284,6 +299,7 @@ span.company.all {
 }
 
 .credit {
+  margin-top: @baseLineHeight;
   color: @grayLight;
   font-size: @baseFontSize * 0.75;
   line-height: @baseLineHeight * .75;
