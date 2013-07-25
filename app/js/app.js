@@ -32,9 +32,11 @@
 
     // Alphabetic sorting
     companyNames.sort();
-    // Negative offset summing the company total so that we can get descending order
-    // without overriding the alphabetic sort
-    companyNames = _.sortBy(companyNames, negativeSumCompanySubsidiaries);
+    companyNames = _.sortBy(companyNames, function(companyName) {
+      // Negative offset summing the company total so that we can get descending order
+      // without overriding the alphabetic sort
+      return -sumCompanySubsidiaries(companyName);
+    });
 
     countries = _.map(countryTotals, function(total, country) {
       if (highestCountryCount < total) {
@@ -50,10 +52,6 @@
         number: null
       };
     });
-  };
-
-  var negativeSumCompanySubsidiaries = function(companyName) {
-    return -sumCompanySubsidiaries(companyName);
   };
 
   var sumCompanySubsidiaries = function(companyName) {
@@ -126,8 +124,7 @@
 
   var filterCountriesByCompanyData = function(company, data) {
 
-    var sumOfCounts = _(data.countries).values().reduce(function(s,n) { return s + n; });
-    animateCountTo(subsidiariesCount, sumOfCounts);
+    animateCountTo(subsidiariesCount, sumCompanySubsidiaries(company));
 
     companyName.text(company);
 
