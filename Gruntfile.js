@@ -247,7 +247,8 @@ module.exports = function(grunt) {
           src: [
             'index.html',
             '*.{ico,txt}',
-            '.htaccess'
+            '.htaccess',
+            'components/font-awesome/font/*'
           ]
         }]
       }
@@ -256,7 +257,7 @@ module.exports = function(grunt) {
     cdn: {
       dist: {
         src: ['<%= project.dist %>/index.html'],
-        cdn: 'http://tax-havens-assets.theglobalmail.org'
+        cdn: 'http://tax-havens.theglobalmail.org'
       },
 
       staging: {
@@ -364,7 +365,7 @@ module.exports = function(grunt) {
 
     tasks = tasks.concat([
       targetToTask[target],
-      'clean:dist'
+//      'clean:dist'
     ]);
 
     grunt.task.run(tasks);

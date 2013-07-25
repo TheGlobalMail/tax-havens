@@ -171,7 +171,7 @@
 
   var showAllCountries = function() {
     companyName.text(defaultCompanyName);
-    animateCountTo(subsidiariesCount, highestCountryCount);
+    animateCountTo(subsidiariesCount, totalCountryCount);
     companyInfoLink.hide();
     _.each(countries, function(obj) {
       obj.container.attr('data-total', obj.total);
