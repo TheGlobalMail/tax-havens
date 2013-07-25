@@ -30,7 +30,11 @@
       });
     });
 
-    companyNames = _(companyNames).sortBy(sumCompanySubsidiaries).reverse().value();
+    // Alphabetic sorting
+    companyNames.sort();
+    // Negative offset summing the company total so that we can get descending order
+    // without overriding the alphabetic sort
+    companyNames = _.sortBy(companyNames, negativeSumCompanySubsidiaries);
 
     countries = _.map(countryTotals, function(total, country) {
       if (highestCountryCount < total) {
@@ -46,6 +50,10 @@
         number: null
       };
     });
+  };
+
+  var negativeSumCompanySubsidiaries = function(companyName) {
+    return -sumCompanySubsidiaries(companyName);
   };
 
   var sumCompanySubsidiaries = function(companyName) {
