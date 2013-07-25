@@ -65,17 +65,16 @@
 
   var insertCompanies = function() {
     _.each(companyNames, function(company, i) {
-      var container = $('<li class="company">')
-        .attr('data-company', company);
-      if (i === 0) {
-        container.addClass('selected');
-      }
-      var text = $('<span class="company-text">')
-        .text(company);
-      var number = $('<span class="company-number">')
-        .text(sumCompanySubsidiaries(company));
-      var clear = $('<div class="clear">');
-      container.append(text, number, clear);
+      var container = $(
+        '<li class="company ' + (i === 0 ? 'selected' : '') +  '" data-company="' + company + '">' +
+          '<span class="company-text">' +
+            company +
+          '</span>' +
+          '<span class="company-number">' +
+            sumCompanySubsidiaries(company) +
+          '</span>' +
+        '</li>'
+      );
       companyList.append(container);
     });
   };
@@ -83,21 +82,27 @@
   var insertCountries = function() {
     _.each(countries, function(obj) {
       var country = obj.name;
-
-      obj.container = $('<li class="country-container" data-country-name="' + country +  '">');
-      obj.text = $('<span class="country">').text(country);
-      obj.bar = $('<div class="country-bar" style="width: 0;">');
-      obj.number = $('<span class="country-number">').text(obj.total);
-
-      obj.container.append(obj.text, obj.bar, obj.number);
-
+      obj.container = $(
+        '<li class="country-container" data-country-name="' + country +  '">' +
+          '<span class="country">' +
+            country +
+          '</span>' +
+          '<div class="country-bar" style="width: 0;"></div>' +
+          '<span class="country-number">' +
+            obj.total +
+          '</span>' +
+        '</li>'
+      );
       countryList.append(obj.container);
+
+      obj.text = obj.container.find('.country');
+      obj.bar = obj.container.find('.country-bar');
+      obj.number = obj.container.find('.country-number');
     });
     countryList.isotope({
       layoutMode: 'straightDown',
       itemSelector: '.country-container'
     });
-//    showAllCountries();
     var company = companyNames[0];
     filterCountriesByCompanyData(company, data[company]);
     sortCountries();
@@ -134,10 +139,10 @@
     if (data.asx) {
       companyInfoLink
         .show()
-        .attr(
-          'href',
-          'http://www.asx.com.au/asx/research/companyInfo.do?by=asxCode&asxCode=' + data.asx
-        );
+        .attr({
+          href: 'http://www.asx.com.au/asx/research/companyInfo.do?by=asxCode&asxCode=' + data.asx,
+          title: 'ASX Company information page for ' + company
+        });
     } else {
       companyInfoLink.hide();
     }
