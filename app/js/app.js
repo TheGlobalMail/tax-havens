@@ -9,6 +9,7 @@
   var countryList;
   var companyName;
   var defaultCompanyName;
+  var scaleMarkerHigh;
 
   var processData = function() {
     var countryTotals = {};
@@ -91,8 +92,18 @@
     });
   };
 
+  var animateScaleMarkerHighTo = function(number) {
+    scaleMarkerHigh.countTo({
+      from: parseInt(scaleMarkerHigh.text()),
+      to: number,
+      speed: 750,
+      refreshInterval: 50
+    });
+  };
+
   var filterCountriesByCompanyData = function(data) {
     var totalNumber = _.max(_.values(data));
+    animateScaleMarkerHighTo(totalNumber);
     var countryNames = _.keys(data);
     var countryElements = countryList.children('.country-container');
     countryElements.each(function() {
@@ -115,6 +126,7 @@
   };
 
   var showAllCountries = function() {
+    animateScaleMarkerHighTo(highestCountryCount);
     _.each(countries, function(obj) {
       obj.container.attr('data-total', obj.total);
       var barWidth = (obj.total / highestCountryCount) * 100;
@@ -151,6 +163,7 @@
     companyList = $('.company-list');
     countryList = $('.country-list');
     companyName = $('.company-name');
+    scaleMarkerHigh = $('.scale-marker-high');
     defaultCompanyName = companyName.text();
 
     processData();
