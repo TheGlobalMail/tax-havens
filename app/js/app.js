@@ -134,6 +134,11 @@
 
   var companyOnClick = function() {
     var element = $(this);
+    if (countryList.scrollTop() > 0) {
+      countryList.animate({
+        'scrollTop': 0
+      }, 500);
+    }
     var companies = $('.company');
     companies.filter('.selected').removeClass('selected');
     element.addClass('selected');
@@ -149,8 +154,36 @@
     }
   };
 
+  var getListOnScroll = function($element) {
+
+    var element = $element[0];
+    var elementHeight = $element.outerHeight();
+    var up = $element.parent().find('.list-control-up');
+    var down = $element.parent().find('.list-control-down');
+
+    return function() {
+      var elementScrollTop = $element.scrollTop();
+      if (elementScrollTop === 0) {
+        up.addClass('disabled');
+      } else if (element.scrollHeight == elementScrollTop + elementHeight) {
+        down.addClass('disabled');
+      } else {
+        up.removeClass('disabled');
+        down.removeClass('disabled');
+      }
+    };
+  };
+
   var setBindings = function() {
     $('.company').on('click', companyOnClick);
+
+    var companyListOnScroll = getListOnScroll(companyList);
+    companyListOnScroll();
+    companyList.on('scroll', companyListOnScroll);
+
+    var countryListOnScroll = getListOnScroll(companyList);
+    countryListOnScroll();
+    countryList.on('scroll', countryListOnScroll);
   };
 
   var init = function() {
