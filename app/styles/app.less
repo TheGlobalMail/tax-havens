@@ -43,6 +43,7 @@ body {
   padding-bottom: @baseLineHeight / 2;
   border-bottom: @baseLineHeight / 4 solid @orange;
   margin-bottom: @baseLineHeight / 2;
+  position: relative;
 }
 
 .subsidiaries-info {
@@ -66,7 +67,10 @@ body {
   color: @orange;
 }
 
-.company-info-link {
+// RESET BUTTON
+
+
+.company-info-link, .company.all {
   color: @gray;
   background: @grayLighter;
   display: inline-block;
@@ -74,8 +78,7 @@ body {
   line-height: @baseLineHeight;
   font-size: @baseFontSize * .75;
   padding: 0 6px;
-  margin: 8px 0 0 4px;
-  vertical-align: top;
+  text-transform: uppercase;
 
   .border-radius(3px);
   &:hover {
@@ -84,12 +87,25 @@ body {
   };
 }
 
+.company.all {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom:  @baseLineHeight / 2;
+}
+
+.company-info-link {
+  margin: 8px 0 0 4px;
+  vertical-align: top;
+}
+
 // COLUMNS
 
 .list-column {
   padding: 0;
   margin: 0;
   position: relative;
+  overflow: hidden;
 }
 
 .column-title {
@@ -110,7 +126,6 @@ body {
 }
 
 .list-wrapper {
-  overflow: hidden;
   position: relative;
 }
 
@@ -126,7 +141,7 @@ body {
 
 .country-list {
   margin-bottom: 25px;
-  max-height: 500px - 25px;  
+  // max-height: 500px - 25px;  
 }
 
 // UP / DOWN ARROWS
@@ -166,23 +181,16 @@ body {
   &.disabled {
     color: @grayLighter;
     cursor: default;
+    .box-shadow(0 0 0 0 transparent);
+
     &:hover {
       background: @white;
     };
   }
 }
 
-// RESET BUTTON
-
-.company.all {
-  font-weight: 900;
-  font-size: @baseFontSize * 0.85;
-  text-transform: uppercase;
-  text-align: center;
-}
 
 // SCALE 
-
 
 .scale-wrapper {
   position: relative;
