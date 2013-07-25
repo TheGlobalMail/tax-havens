@@ -9,7 +9,7 @@
 @sansFontFamily:  "open-sans", "Open Sans", Helvetica, Arial, sans-serif;
 @baseFontSize:    14px;
 @baseLineHeight:  20px;
-@fadeHeight:      20px;
+@fadeHeight:      10px;
 
 
 #main {
@@ -94,50 +94,54 @@
 .list-wrapper {
   overflow: hidden;
   position: relative;
-  &:before {
-    content: " ";
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: @fadeHeight;
-    @startColor: @white;
-    @endColor: rgba(255,255,255,0);    
-    border-top: 5px solid @startColor;
-    background-image: -moz-linear-gradient(top, @startColor, @endColor); // FF 3.6+
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), to(@endColor)); // Safari 4+, Chrome 2+
-    background-image: -webkit-linear-gradient(top, @startColor, @endColor); // Safari 5.1+, Chrome 10+
-    background-image: -o-linear-gradient(top, @startColor, @endColor); // Opera 11.10
-    background-image: linear-gradient(to bottom, @startColor, @endColor); // Standard, IE10
-    background-repeat: repeat-x;
-    z-index: 10
-  };
-  &:after {
-    content: " ";
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: @fadeHeight;
-    @startColor: rgba(255,255,255,0);
-    @endColor: @white;    
-    border-bottom: 5px solid @endColor;
-    background-image: -moz-linear-gradient(top, @startColor, @endColor); // FF 3.6+
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), to(@endColor)); // Safari 4+, Chrome 2+
-    background-image: -webkit-linear-gradient(top, @startColor, @endColor); // Safari 5.1+, Chrome 10+
-    background-image: -o-linear-gradient(top, @startColor, @endColor); // Opera 11.10
-    background-image: linear-gradient(to bottom, @startColor, @endColor); // Standard, IE10
-    background-repeat: repeat-x;
-    z-index: 10
-  };
 }
 
 .company-list,
 .country-list {
   list-style: none;
   margin: 0;
-  padding: (@fadeHeight + 5px) 0;
+  padding: (@fadeHeight * 3) 0;
   max-height: 500px;
   overflow: scroll !important;
 }
+
+// UP / DOWN ARROWS
+
+.list-controls {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list-control {
+  background: @white;
+  color: @gray;
+  .border-radius(3px);
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  z-index: 11;
+  cursor: pointer;
+  i {
+    display: inline-block;
+    margin-top: 5px;
+  }
+  &.list-control-up {
+    top: 0;
+    .box-shadow(0 (@fadeHeight * -0.5) @fadeHeight @fadeHeight @white);
+  }
+  &.list-control-down {
+    bottom: 0;
+    .box-shadow(0 (@fadeHeight * 0.5) @fadeHeight @fadeHeight @white);
+  }
+  &:hover {
+    color: @black;
+    background: @grayLighter;
+  };
+}
+
+// SCALE 
 
 .scale-wrapper {
   position: relative;
@@ -151,16 +155,9 @@
   font-size: 1.5em;
   font-weight: bold;
   top: 0;
+  &.scale-marker-low { left: 0; }
+  &.scale-marker-high { right: 0; }
 }
-
-.scale-marker-low {
-  left: 0;
-}
-
-.scale-marker-high {
-  right: 0;
-}
-
 
 .scale {
   position: absolute;
@@ -189,7 +186,6 @@
   }
   .clearfix();
 }
-
 
 // COMPANIES
 
@@ -250,6 +246,8 @@
     color: @grayLight;
   }
 }
+
+// ETC
 
 .clear {
   clear: both;
