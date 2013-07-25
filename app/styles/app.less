@@ -36,15 +36,16 @@
 
 .lead-in {
   display: block;
-  color: @black;
+  color: @grayLight;
   text-transform: uppercase;
-  font-size: @baseFontSize * 1.2;
+  font-size: @baseFontSize;
 }
 
 .company-name {
   font-size: 1.1em;
-  display: block;
-  margin: 0.25em 0;
+  line-height: 1.2;
+  // display: block;
+  margin: 0 0 .2em 0;
   color: @orange;
 }
 
@@ -56,6 +57,7 @@
   line-height: @baseFontSize * .75;
   font-size: @baseFontSize * .75;
   padding: 6px;
+  padding-bottom: 0;
   .border-radius(3px);
   i {
     // font-size: @baseFontSize * 1.5;
@@ -234,6 +236,7 @@
   top: 3px;
   right: 3%;
   z-index: 2;
+  opacity: 0.4;
 }
 
 .country-container[data-total="0"] {
