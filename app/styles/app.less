@@ -106,7 +106,8 @@
   margin: 0;
   padding: (@fadeHeight * 3) 0;
   max-height: 500px;
-  overflow: scroll !important;
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
 }
 
 .country-list {
@@ -231,8 +232,9 @@
 
 .company {
   font-size: 1em;
+  line-height: 1.2;
   cursor: pointer;
-  padding: 0.25em;
+  padding: 0.4em;
   .border-radius(3px);
   margin-bottom: 1px;
   &.selected, &:hover {
