@@ -276,4 +276,8 @@
 
   $(init);
 
+  if (location.search.indexOf('embed') != -1) {
+    document.body.className += ' embedded';
+  }
+
 }(jQuery, _, tgm.data));
