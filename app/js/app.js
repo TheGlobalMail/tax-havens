@@ -213,7 +213,8 @@
       var elementScrollTop = $element.scrollTop();
       if (elementScrollTop === 0) {
         up.addClass('disabled');
-      } else if (element.scrollHeight == elementScrollTop + elementHeight) {
+      // If within 5 pixels of the bottom
+      } else if (element.scrollHeight <= elementScrollTop + elementHeight + 5) {
         down.addClass('disabled');
       } else {
         up.removeClass('disabled');
