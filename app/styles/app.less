@@ -1,5 +1,6 @@
 
-@tgmStoryWidth:   600px;
+@tgmStoryWidth:   96%;
+@columnHeight:    340px;
 @orange:          #fd9c58;
 @white:           #fff;
 @black:           #111;
@@ -17,14 +18,26 @@ body {
   color: #333;
   margin: 0;
   padding: 0;
+  background: @grayLightest;
+}
+
+// .navbar.special-feature .brand {
+//   width: 192px;
+//   background-position: left center;
+// }
+
+body.embedded .navbar {
+  display: none;
 }
 
 #main {
   width: @tgmStoryWidth;
+  max-width: 1000px;
+  min-width: 500px;
   font-family: @sansFontFamily;
   font-size: @baseFontSize; 
   line-height: @baseLineHeight;
-  margin: 0;
+  margin: 0 auto;
   padding: 10px;
   background: @grayLightest;
 }
@@ -136,14 +149,14 @@ body {
   margin: 0;
   width: 100%;
   padding: (@fadeHeight * 3) 0 (@fadeHeight * 3) 0;
-  max-height: 500px;
+  max-height: @columnHeight;
   overflow-x: hidden !important;
   overflow-y: scroll !important;
 }
 
 .country-list {
   margin-bottom: 25px;
-  max-height: 500px - 25px;  
+  max-height: @columnHeight - 25px;  
 }
 
 // UP / DOWN ARROWS
@@ -320,12 +333,26 @@ body {
   }
 }
 
+// footer
+
 .credit {
   margin-top: @baseLineHeight;
+  border-top: 1px solid @grayLighter;
+  padding-top: @baseLineHeight - 1;
+}
+
+.source,
+.tgm-watermark {
+  display: block;
+}
+
+.source {
+  width: 67%;
+  margin: 0;
+  float: left;
   color: @grayLight;
   font-size: @baseFontSize * 0.75;
   line-height: @baseLineHeight * .75;
-
   a {
     color: @gray;
     &:hover {
@@ -333,6 +360,26 @@ body {
     };
   }
 }
+
+
+
+.tgm-watermark {
+  width: auto;
+  float: right;
+  color: @gray;
+  text-decoration: none;
+  line-height: @baseLineHeight * .75;
+  padding: (@baseLineHeight * .75) / 2 0;
+  padding-left: 38px;
+  background: url(/images/tgm-logo-30px.png) left center no-repeat;
+  text-align: right;
+  font-weight: 600;
+  &:hover {
+    color: @black;
+    text-decoration: underline;
+  }
+}
+
 
 // ETC
 
