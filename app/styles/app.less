@@ -29,15 +29,19 @@ body {
   background-size: auto;
 }
 
-// Small tablet
-@media only screen and (max-width: 750px) {
-  .navbar.special-feature .special-feature-misc { display: none; }
-}
-
 body.embedded {
   .read-more { display: none; }
   .navbar { display: none; }
+  #main { padding-bottom: 0; }
+  .credit {
+    padding-top: 15px;
+  }
 }
+
+body.embedded.external {
+  .read-more { display: block; }
+}
+
 
 #main {
   width: @tgmStoryWidth;
@@ -49,6 +53,7 @@ body.embedded {
   margin: 0 auto;
   padding: 10px;
   background: @grayLightest;
+  .clearfix;
 }
 
 
@@ -439,3 +444,96 @@ body.embedded {
   -o-transition-property:      -o-transform, opacity;
   transition-property:         transform, opacity;
 }
+
+// BASIC RESPONSIVE STUFF
+@media only screen and (max-device-width: 750px) {
+  // using max-device-width so we don't get this in iframes
+  .navbar.special-feature .special-feature-misc { display: none; }
+
+  #main {
+    width: auto;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .viz-title {
+    font-size: @baseFontSize * 3.5;
+    line-height: @baseLineHeight * 2.5;
+  }
+
+  .viz-intro-text {
+    font-size: @baseFontSize * 0.85;
+  }
+
+  .selected-info {
+    border-bottom: 1px solid @grayLighter;
+    margin-bottom: 4px;
+    padding-bottom: 0;
+  }
+
+  .company-name {
+    font-size: @baseFontSize * 1.5;
+    line-height: @baseLineHeight * 1;
+    display: inline;
+  }
+
+  .company-info-link {
+    margin-top: 0;
+  }
+
+  .subsidiaries-info {
+    font-size: @baseFontSize * 0.85;
+  }
+
+  .company.all {
+    position: relative;
+    right: auto;
+    bottom: auto;
+  }
+
+  .company-list-column {
+    width: 35%;
+  }
+
+  .country-list-column {
+    width: 62%;
+  }
+
+
+@columnHeight: 250px;
+
+.company-list,
+.country-list {
+  max-height: @columnHeight;
+}
+
+.country-list {
+  margin-bottom: 25px;
+  max-height: @columnHeight - 25px;  
+}
+
+
+  .company-list .company,
+  .country-container
+   {
+    font-size: @baseFontSize * 0.85;
+  }
+
+  .credit {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    .source {
+      float: none;
+      width: 100%;
+      font-size: @baseFontSize * 0.65;
+    }
+
+    .tgm-watermark {
+      float: left;
+      margin-top: 8px;
+    }
+  }
+
+
+}
+

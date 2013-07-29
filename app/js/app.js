@@ -281,4 +281,9 @@
     document.body.className += ' embedded';
   }
 
+  if (location.search.indexOf('external') != -1) {
+    document.body.className += ' external';
+  }
+
+
 }(jQuery, _, tgm.data));
