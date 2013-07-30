@@ -366,7 +366,7 @@ module.exports = function(grunt) {
 
     tasks = tasks.concat([
       targetToTask[target],
-//      'clean:dist'
+      'clean:dist'
     ]);
 
     grunt.task.run(tasks);
