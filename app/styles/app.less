@@ -34,7 +34,15 @@ body.embedded {
   .navbar { display: none; }
   #main { padding-bottom: 0; }
   .credit {
-    padding-top: 15px;
+    padding-top: 16px;
+    margin-top: 12px;
+    .special-feature-misc {
+      display: block;
+      overflow: hidden;
+    }
+    .source {
+      width: 57%;
+    }
   }
 }
 
@@ -381,12 +389,18 @@ body.embedded.external {
   display: block;
 }
 
+.credit .special-feature-misc {
+  width: 90px;
+  float: left;
+  display: none;
+}
+
 .source {
   width: 67%;
   margin: 0;
   float: left;
   color: @grayLight;
-  font-size: @baseFontSize * 0.75;
+  font-size: @baseFontSize * 0.7;
   line-height: @baseLineHeight * .75;
   a {
     color: @gray;
@@ -523,6 +537,9 @@ body.embedded.external {
   .credit {
     padding-top: 8px;
     padding-bottom: 8px;
+    .special-feature-misc {
+      display: none;
+    }
     .source {
       float: none;
       width: 100%;
